@@ -20,10 +20,11 @@ public class Test_api {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws CryptoException{
-       testing t=null;
-       
+       testing t=new testing();
+       t.setA(5);
+       t.b=15;
        KeyValueAPI conn=new KeyValueAPI("1234123412341234");
-       
+       conn.SetObject("test", t);
         testing myget = (testing) conn.GetObject("test2");
         System.out.println(myget.b);
         System.out.println(myget.getA());
