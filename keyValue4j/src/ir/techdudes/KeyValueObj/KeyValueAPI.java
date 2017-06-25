@@ -7,6 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +23,7 @@ import java.util.logging.Logger;
  * @author nima
  */
 public class KeyValueAPI {
-
+    private HashMap<String,Object> cache;
     private String Password;
     public KeyValueAPI(String Password) {
         this.Password=Password;
@@ -44,6 +47,9 @@ public class KeyValueAPI {
      */
     public Object GetObject(String key) throws CryptoException {
         try {
+            if(cache.containsKey(key))
+                return ((Entity)cache.get(key)).getData();
+            System.out.println("ir.techdudes.KeyValueObj.KeyValueAPI.GetObject()");
             FileInputStream fin = null;
             ObjectInputStream ois = null;
             //decrypt
@@ -68,8 +74,10 @@ public class KeyValueAPI {
     }
 
     public void SetObject(String key, Object object) throws CryptoException {
+        
         Entity entity = new Entity();
         entity.setData(object);
+        caching(key, entity);
         FileOutputStream fout = null;
         ObjectOutputStream oos = null;
 
@@ -112,5 +120,16 @@ public class KeyValueAPI {
 
         }
 
+    }
+    private void caching(String key,Entity entity){
+        if(cache==null){
+            cache =new LinkedHashMap<>();
+        }
+        if(cache.size()<4000){
+            cache.put(key,entity);
+        } else{
+            for(int i=0;i<30;i++)
+                cache.entrySet().iterator().remove();
+        }
     }
 }
