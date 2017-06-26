@@ -14,8 +14,13 @@ import java.io.Serializable;
 public class Entity implements Serializable{
     private String ID;
     private Object data;
-    public Entity(){
+    private String key;
+    public Entity(String key){
         ID=java.util.UUID.randomUUID().toString();
+        this.key=key;
+    }
+    public String getKey(){
+        return key;
     }
     public String GetID(){
         return ID;

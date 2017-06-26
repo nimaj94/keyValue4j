@@ -25,17 +25,18 @@ import java.util.logging.Logger;
 public class KeyValueAPI {
     private HashMap<String,Object> cache;
     private String Password;
+    private String Directory;
     public void changePassword(String oldpass,String newpass){
-        File folder = new File("objects/");
+        File folder = new File(Directory+"/");
         File[] listOfFiles = folder.listFiles();
 
         for (File f:listOfFiles) {
             try {
                 
                 CryptoUtils crypto = new CryptoUtils();
-                File decryptedFile= new File("objects/"+"temp" + ".ser");
+                File decryptedFile= new File(Directory+"/"+"temp" + ".ser");
                 crypto.decrypt(oldpass, f, decryptedFile);
-                File encryptedFile = new File("objects/"+f.getName() );
+                File encryptedFile = new File(Directory+"/"+f.getName() );
                 crypto.encrypt(newpass, decryptedFile, encryptedFile);
                 decryptedFile.delete();
                 Password=newpass;
@@ -44,12 +45,13 @@ public class KeyValueAPI {
             }
         }
     }
-    public KeyValueAPI(String Password) {
+    public KeyValueAPI(String Password,String directory) {
         if(cache==null){
             cache =new LinkedHashMap<>();
         }
+        Directory=directory;
         this.Password=Password;
-        File theDir = new File("objects");
+        File theDir = new File(Directory);
         if (!theDir.exists()) {
             boolean result = false;
 
@@ -77,11 +79,11 @@ public class KeyValueAPI {
             ObjectInputStream ois = null;
             //decrypt
             CryptoUtils crypto = new CryptoUtils();
-            File decryptedFile= new File("objects/"+key + ".ser");
-            File encryptedFile = new File("objects/"+key + "encrypted");
+            File decryptedFile= new File(Directory+"/"+key + ".ser");
+            File encryptedFile = new File(Directory+"/"+key + "encrypted");
             crypto.decrypt(Password, encryptedFile, decryptedFile);
             //end
-            fin = new FileInputStream("objects/"+key + ".ser");
+            fin = new FileInputStream(Directory+"/"+key + ".ser");
             ois = new ObjectInputStream(fin);
             Object readObject = ois.readObject();
             Entity en = (Entity) readObject;
@@ -99,7 +101,7 @@ public class KeyValueAPI {
 
     public void SetObject(String key, Object object) throws CryptoException {
         
-        Entity entity = new Entity();
+        Entity entity = new Entity(key);
         entity.setData(object);
         caching(key, entity);
         FileOutputStream fout = null;
@@ -107,7 +109,7 @@ public class KeyValueAPI {
 
         try {
             
-            fout = new FileOutputStream("objects/"+key + ".ser");
+            fout = new FileOutputStream(Directory+"/"+key + ".ser");
             oos = new ObjectOutputStream(fout);
             oos.writeObject(entity);
             oos.flush();
@@ -123,8 +125,8 @@ public class KeyValueAPI {
                 try {
                     //encrypt
                     CryptoUtils crypto = new CryptoUtils();
-                    File inputFile= new File("objects/"+key + ".ser");
-                    File encryptedFile = new File("objects/"+key + "encrypted");
+                    File inputFile= new File(Directory+"/"+key + ".ser");
+                    File encryptedFile = new File(Directory+"/"+key + "encrypted");
                     crypto.encrypt(Password, inputFile, encryptedFile);
                     inputFile.delete();
                     //end
