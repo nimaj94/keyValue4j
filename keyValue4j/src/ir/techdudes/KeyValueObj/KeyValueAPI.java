@@ -31,17 +31,23 @@ public class KeyValueAPI {
 
         for (File f:listOfFiles) {
             try {
+                
                 CryptoUtils crypto = new CryptoUtils();
                 File decryptedFile= new File("objects/"+"temp" + ".ser");
                 crypto.decrypt(oldpass, f, decryptedFile);
                 File encryptedFile = new File("objects/"+f.getName() );
-                crypto.encrypt(Password, decryptedFile, encryptedFile);
+                crypto.encrypt(newpass, decryptedFile, encryptedFile);
+                decryptedFile.delete();
+                Password=newpass;
             } catch (CryptoException ex) {
                 Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
     public KeyValueAPI(String Password) {
+        if(cache==null){
+            cache =new LinkedHashMap<>();
+        }
         this.Password=Password;
         File theDir = new File("objects");
         if (!theDir.exists()) {
@@ -65,7 +71,8 @@ public class KeyValueAPI {
         try {
             if(cache.containsKey(key))
                 return ((Entity)cache.get(key)).getData();
-            System.out.println("ir.techdudes.KeyValueObj.KeyValueAPI.GetObject()");
+            
+            //System.out.println("ir.techdudes.KeyValueObj.KeyValueAPI.GetObject()");
             FileInputStream fin = null;
             ObjectInputStream ois = null;
             //decrypt
@@ -78,6 +85,7 @@ public class KeyValueAPI {
             ois = new ObjectInputStream(fin);
             Object readObject = ois.readObject();
             Entity en = (Entity) readObject;
+            caching(key,en);
             decryptedFile.delete();
             return en.getData();
 
