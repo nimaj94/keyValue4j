@@ -12,7 +12,14 @@ import java.io.Serializable;
  * @author nima
  */
 public class Entity implements Serializable{
+    private String ID;
     private Object data;
+    public Entity(){
+        ID=java.util.UUID.randomUUID().toString();
+    }
+    public String GetID(){
+        return ID;
+    }
     public void setData(Object t){
         data = t;
     }

@@ -25,6 +25,22 @@ import java.util.logging.Logger;
 public class KeyValueAPI {
     private HashMap<String,Object> cache;
     private String Password;
+    public void changePassword(String oldpass,String newpass){
+        File folder = new File("objects/");
+        File[] listOfFiles = folder.listFiles();
+
+        for (File f:listOfFiles) {
+            try {
+                CryptoUtils crypto = new CryptoUtils();
+                File decryptedFile= new File("objects/"+"temp" + ".ser");
+                crypto.decrypt(oldpass, f, decryptedFile);
+                File encryptedFile = new File("objects/"+f.getName() );
+                crypto.encrypt(Password, decryptedFile, encryptedFile);
+            } catch (CryptoException ex) {
+                Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
     public KeyValueAPI(String Password) {
         this.Password=Password;
         File theDir = new File("objects");

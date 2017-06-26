@@ -5,10 +5,7 @@
  */
 package ir.techdudes.KeyValueObj;
 
-/**
- *
- * @author nima
- */
+
 public class CryptoException extends Exception {
     public CryptoException() {
     }
