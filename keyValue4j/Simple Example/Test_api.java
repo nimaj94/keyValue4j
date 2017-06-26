@@ -23,7 +23,7 @@ public class Test_api {
        testing t=new testing();
        t.setA(5);
        t.b=15;
-       KeyValueAPI conn=new KeyValueAPI("1234123412341234");
+       KeyValueAPI conn=new KeyValueAPI("1234123412341234","repo");
        conn.SetObject("test", t);
         testing myget = (testing) conn.GetObject("test2");
         System.out.println(myget.b);
