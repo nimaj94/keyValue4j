@@ -23,18 +23,18 @@ import javax.crypto.spec.SecretKeySpec;
 
 
 public class CryptoUtils {
-    private static final String ALGORITHM = "AES";
-    private static final String TRANSFORMATION = "AES";
- 
+    private final String ALGORITHM = "AES";
+    private final String TRANSFORMATION = "AES";
+    
     public void encrypt(String key, File inputFile, File outputFile)
             throws CryptoException {
         doCrypto(Cipher.ENCRYPT_MODE, key, inputFile, outputFile);
     }
     public String encrypt(String key,String text){
-        return Arrays.toString(CryptoByte(Cipher.ENCRYPT_MODE, key, text.getBytes()));
+        return CryptoByte(Cipher.ENCRYPT_MODE, key, text.getBytes()).toString();
     }
     public String decrypy(String key,String text){
-        return Arrays.toString(CryptoByte(Cipher.DECRYPT_MODE, key, text.getBytes()));
+        return CryptoByte(Cipher.DECRYPT_MODE, key, text.getBytes()).toString();
     }
     public byte[] encrypt(String key,byte [] bytes){
         return CryptoByte(Cipher.ENCRYPT_MODE, key, bytes);

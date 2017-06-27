@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -27,27 +29,30 @@ import java.util.logging.Logger;
  * @author nima
  */
 public class KeyValueAPI {
-    private HashMap<String,Object> cache;
+
+    private HashMap<String, Object> cache;
     private String Password;
     private String Directory;
-    public void changePassword(String oldpass,String newpass){
-        File folder = new File(Directory+"/");
+
+    public void changePassword(String oldpass, String newpass) {
+        File folder = new File(Directory + "/");
         File[] listOfFiles = folder.listFiles();
-CryptoUtils crypto = new CryptoUtils();
-        for (File f:listOfFiles) {
+        CryptoUtils crypto = new CryptoUtils();
+        for (File f : listOfFiles) {
             try {
-                File newf=new File(Directory+"/"+crypto.encrypt(newpass, crypto.decrypy(oldpass, f.getName())));
+                
                 FileInputStream fin = null;
-                fin = new FileInputStream(Directory+"/"+f.getName());
+                
+                fin = new FileInputStream(Directory + "/" + f.getName());
                 byte[] readFully = readFully(fin, f);
-                byte[] decrypted=crypto.decrypy(oldpass, readFully);
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        FileOutputStream outputStream = new FileOutputStream(newf);
-                    outputStream.write(crypto.encrypt(newpass,decrypted));
-                    fin.close();
-                    bos.close();
-                    outputStream.close();
-                Password=newpass;
+                byte[] decrypted = crypto.decrypy(oldpass, readFully);
+                fin.close();
+                FileOutputStream outputStream = new FileOutputStream(Directory + "/" + f.getName());
+                outputStream.write(crypto.encrypt(newpass, decrypted));
+                
+                
+                outputStream.close();
+                Password = newpass;
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -55,12 +60,13 @@ CryptoUtils crypto = new CryptoUtils();
             }
         }
     }
-    public KeyValueAPI(String Password,String directory) {
-        if(cache==null){
-            cache =new LinkedHashMap<>();
+
+    public KeyValueAPI(String Password, String directory) {
+        if (cache == null) {
+            cache = new LinkedHashMap<>();
         }
-        Directory=directory;
-        this.Password=Password;
+        Directory = directory;
+        this.Password = Password;
         File theDir = new File(Directory);
         if (!theDir.exists()) {
             boolean result = false;
@@ -81,25 +87,26 @@ CryptoUtils crypto = new CryptoUtils();
      */
     public Object GetObject(String key) throws CryptoException {
         try {
-            if(cache.containsKey(key))
-                return ((Entity)cache.get(key)).getData();
-            
+            if (cache.containsKey(key)) {
+                return ((Entity) cache.get(key)).getData();
+            }
+
             //System.out.println("ir.techdudes.KeyValueObj.KeyValueAPI.GetObject()");
             FileInputStream fin = null;
             ObjectInput in = null;
             //decrypt
             CryptoUtils crypto = new CryptoUtils();
-            
+
             //end
-            fin = new FileInputStream(Directory+"/"+crypto.encrypt(Password, key.getBytes()));
-            byte[] readFully = readFully(fin, new File(Directory+"/"+crypto.encrypt(Password, key.getBytes())));
-            byte[] decrypted=crypto.decrypy(Password, readFully);
+            fin = new FileInputStream(Directory + "/" + key);
+            byte[] readFully = readFully(fin, new File(Directory + "/" + key));
+            byte[] decrypted = crypto.decrypy(Password, readFully);
             ByteArrayInputStream bis = new ByteArrayInputStream(decrypted);
-            in = new ObjectInputStream(bis);  
+            in = new ObjectInputStream(bis);
             Object readObject = in.readObject();
             Entity en = (Entity) readObject;
-            caching(key,en);
-            
+            caching(key, en);
+
             return en.getData();
 
         } catch (FileNotFoundException ex) {
@@ -119,13 +126,12 @@ CryptoUtils crypto = new CryptoUtils();
         ObjectOutputStream oos = null;
 
         try {
-            
-            
+
             oos = new ObjectOutputStream(bos);
             oos.writeObject(entity);
             oos.flush();
             //System.out.println("Done");
-            
+
         } catch (Exception ex) {
 
             ex.printStackTrace();
@@ -135,11 +141,12 @@ CryptoUtils crypto = new CryptoUtils();
             if (bos != null) {
                 try {
                     //encrypt
-                    
-                    
-                    File encryptedFile = new File(Directory+"/"+crypto.encrypt(Password, key));
+                      
+                    File encryptedFile = new File(Directory + "/" + key);
                     FileOutputStream outputStream = new FileOutputStream(encryptedFile);
-                    outputStream.write(crypto.encrypt(Password,bos.toByteArray()));
+                    
+                    outputStream.write(crypto.encrypt(Password, bos.toByteArray()));
+                    
                     //end
                     bos.close();
                     outputStream.close();
@@ -159,21 +166,25 @@ CryptoUtils crypto = new CryptoUtils();
         }
 
     }
-    private void caching(String key,Entity entity){
-        if(cache==null){
-            cache =new LinkedHashMap<>();
+
+    private void caching(String key, Entity entity) {
+        if (cache == null) {
+            cache = new LinkedHashMap<>();
         }
-        if(cache.size()<4000){
-            cache.put(key,entity);
-        } else{
-            for(int i=0;i<30;i++)
-                cache.entrySet().iterator().remove();
+        if (cache.size() < 4000) {
+            cache.put(key, entity);
+        } else {
+            for (int i = 0; i < 30; i++) {
+                Iterator<Map.Entry<String, Object>> iterator = cache.entrySet().iterator();
+                iterator.next();
+                iterator.remove();
+            }
         }
     }
 
     private byte[] readFully(FileInputStream fin, File file) {
         try {
-            byte[] fileContent = new byte[(int)file.length()];
+            byte[] fileContent = new byte[(int) file.length()];
             fin.read(fileContent);
             return fileContent;
         } catch (IOException ex) {
@@ -181,5 +192,5 @@ CryptoUtils crypto = new CryptoUtils();
         }
         return null;
     }
-    
+
 }
