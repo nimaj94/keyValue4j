@@ -11,9 +11,11 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -116,7 +118,11 @@ public class KeyValueAPI {
         }
         return null;
     }
-
+    public void remove(String key){
+        cache.remove(key);
+        File fileToDelete=new File(Directory + "/"+key);
+        fileToDelete.delete();
+    }
     public void SetObject(String key, Object object) throws CryptoException {
         CryptoUtils crypto = new CryptoUtils();
         Entity entity = new Entity(key);
@@ -191,6 +197,14 @@ public class KeyValueAPI {
             Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    public List<String> getAllKeys(){
+        File dir=new File(Directory);
+        return Arrays.asList(dir.list());
+    }
+    public boolean containKey(String key){
+        File file=new File(Directory + "/"+key);
+        return file.exists();
     }
 
 }
