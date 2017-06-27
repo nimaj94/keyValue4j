@@ -7,12 +7,12 @@ package ir.techdudes.KeyValueObj;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.BadPaddingException;
@@ -30,7 +30,18 @@ public class CryptoUtils {
             throws CryptoException {
         doCrypto(Cipher.ENCRYPT_MODE, key, inputFile, outputFile);
     }
- 
+    public String encrypt(String key,String text){
+        return Arrays.toString(CryptoByte(Cipher.ENCRYPT_MODE, key, text.getBytes()));
+    }
+    public String decrypy(String key,String text){
+        return Arrays.toString(CryptoByte(Cipher.DECRYPT_MODE, key, text.getBytes()));
+    }
+    public byte[] encrypt(String key,byte [] bytes){
+        return CryptoByte(Cipher.ENCRYPT_MODE, key, bytes);
+    }
+    public byte[] decrypy(String key,byte [] bytes){
+        return CryptoByte(Cipher.DECRYPT_MODE, key, bytes);
+    }
     public void decrypt(String key, File inputFile, File outputFile)
             throws CryptoException {
         doCrypto(Cipher.DECRYPT_MODE, key, inputFile, outputFile);
@@ -60,5 +71,18 @@ public class CryptoUtils {
                 | IllegalBlockSizeException | IOException ex) {
             throw new CryptoException("Error encrypting/decrypting file", ex);
         }
+        
     }
+    private byte[] CryptoByte(int cipherMode, String key,byte[] myobj){
+        try {
+            Key secretKey = new SecretKeySpec(key.getBytes(), ALGORITHM);
+            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+            cipher.init(cipherMode, secretKey);
+            byte[] encryptedText=cipher.doFinal(myobj);
+            return encryptedText;
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException ex) {
+            Logger.getLogger(CryptoUtils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+        }
 }

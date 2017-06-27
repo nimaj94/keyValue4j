@@ -1,10 +1,13 @@
 package ir.techdudes.KeyValueObj;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
@@ -12,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -29,18 +33,24 @@ public class KeyValueAPI {
     public void changePassword(String oldpass,String newpass){
         File folder = new File(Directory+"/");
         File[] listOfFiles = folder.listFiles();
-
+CryptoUtils crypto = new CryptoUtils();
         for (File f:listOfFiles) {
             try {
-                
-                CryptoUtils crypto = new CryptoUtils();
-                File decryptedFile= new File(Directory+"/"+"temp" + ".ser");
-                crypto.decrypt(oldpass, f, decryptedFile);
-                File encryptedFile = new File(Directory+"/"+f.getName() );
-                crypto.encrypt(newpass, decryptedFile, encryptedFile);
-                decryptedFile.delete();
+                File newf=new File(Directory+"/"+crypto.encrypt(newpass, crypto.decrypy(oldpass, f.getName())));
+                FileInputStream fin = null;
+                fin = new FileInputStream(Directory+"/"+f.getName());
+                byte[] readFully = readFully(fin, f);
+                byte[] decrypted=crypto.decrypy(oldpass, readFully);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        FileOutputStream outputStream = new FileOutputStream(newf);
+                    outputStream.write(crypto.encrypt(newpass,decrypted));
+                    fin.close();
+                    bos.close();
+                    outputStream.close();
                 Password=newpass;
-            } catch (CryptoException ex) {
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
                 Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -76,19 +86,20 @@ public class KeyValueAPI {
             
             //System.out.println("ir.techdudes.KeyValueObj.KeyValueAPI.GetObject()");
             FileInputStream fin = null;
-            ObjectInputStream ois = null;
+            ObjectInput in = null;
             //decrypt
             CryptoUtils crypto = new CryptoUtils();
-            File decryptedFile= new File(Directory+"/"+key + ".ser");
-            File encryptedFile = new File(Directory+"/"+key + "encrypted");
-            crypto.decrypt(Password, encryptedFile, decryptedFile);
+            
             //end
-            fin = new FileInputStream(Directory+"/"+key + ".ser");
-            ois = new ObjectInputStream(fin);
-            Object readObject = ois.readObject();
+            fin = new FileInputStream(Directory+"/"+crypto.encrypt(Password, key.getBytes()));
+            byte[] readFully = readFully(fin, new File(Directory+"/"+crypto.encrypt(Password, key.getBytes())));
+            byte[] decrypted=crypto.decrypy(Password, readFully);
+            ByteArrayInputStream bis = new ByteArrayInputStream(decrypted);
+            in = new ObjectInputStream(bis);  
+            Object readObject = in.readObject();
             Entity en = (Entity) readObject;
             caching(key,en);
-            decryptedFile.delete();
+            
             return en.getData();
 
         } catch (FileNotFoundException ex) {
@@ -100,17 +111,17 @@ public class KeyValueAPI {
     }
 
     public void SetObject(String key, Object object) throws CryptoException {
-        
+        CryptoUtils crypto = new CryptoUtils();
         Entity entity = new Entity(key);
         entity.setData(object);
         caching(key, entity);
-        FileOutputStream fout = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutputStream oos = null;
 
         try {
             
-            fout = new FileOutputStream(Directory+"/"+key + ".ser");
-            oos = new ObjectOutputStream(fout);
+            
+            oos = new ObjectOutputStream(bos);
             oos.writeObject(entity);
             oos.flush();
             //System.out.println("Done");
@@ -121,16 +132,17 @@ public class KeyValueAPI {
 
         } finally {
 
-            if (fout != null) {
+            if (bos != null) {
                 try {
                     //encrypt
-                    CryptoUtils crypto = new CryptoUtils();
-                    File inputFile= new File(Directory+"/"+key + ".ser");
-                    File encryptedFile = new File(Directory+"/"+key + "encrypted");
-                    crypto.encrypt(Password, inputFile, encryptedFile);
-                    inputFile.delete();
+                    
+                    
+                    File encryptedFile = new File(Directory+"/"+crypto.encrypt(Password, key));
+                    FileOutputStream outputStream = new FileOutputStream(encryptedFile);
+                    outputStream.write(crypto.encrypt(Password,bos.toByteArray()));
                     //end
-                    fout.close();
+                    bos.close();
+                    outputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -158,4 +170,16 @@ public class KeyValueAPI {
                 cache.entrySet().iterator().remove();
         }
     }
+
+    private byte[] readFully(FileInputStream fin, File file) {
+        try {
+            byte[] fileContent = new byte[(int)file.length()];
+            fin.read(fileContent);
+            return fileContent;
+        } catch (IOException ex) {
+            Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
 }
