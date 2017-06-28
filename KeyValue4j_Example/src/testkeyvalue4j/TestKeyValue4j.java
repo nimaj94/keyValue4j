@@ -21,7 +21,7 @@ public class TestKeyValue4j {
         stu.setStuId(4321);
         KeyValueAPI api=new KeyValueAPI("1234123412341234", "Students");
         api.SetObject("stu1", stu);//storing Object
-        Student getstu=(Student) api.GetObject("stu1");
+        Student getstu=(Student) api.GetObject("stu1");//geting Object
         System.out.println(getstu.getNationalId());
     }
     
