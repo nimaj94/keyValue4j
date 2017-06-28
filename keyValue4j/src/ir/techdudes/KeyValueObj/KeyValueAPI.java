@@ -44,16 +44,19 @@ public class KeyValueAPI {
             try {
                 
                 FileInputStream fin = null;
-                
-                fin = new FileInputStream(Directory + "/" + f.getName());
+                File oldFile=new File(Directory + "/" + f.getName());
+                fin = new FileInputStream(oldFile);
+                String newName=Arrays.toString(crypto.encrypt(newpass, crypto.decrypt(oldpass,StringToByte(f.getName()) )));
+                File file=new File(Directory + "/"+newName);
                 byte[] readFully = readFully(fin, f);
-                byte[] decrypted = crypto.decrypy(oldpass, readFully);
+                byte[] decrypted = crypto.decrypt(oldpass, readFully);
                 fin.close();
-                FileOutputStream outputStream = new FileOutputStream(Directory + "/" + f.getName());
+                FileOutputStream outputStream = new FileOutputStream(file);
                 outputStream.write(crypto.encrypt(newpass, decrypted));
                 
                 
                 outputStream.close();
+                oldFile.delete();
                 Password = newpass;
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,6 +70,7 @@ public class KeyValueAPI {
         if (cache == null) {
             cache = new LinkedHashMap<>();
         }
+        
         Directory = directory;
         this.Password = Password;
         File theDir = new File(Directory);
@@ -100,9 +104,9 @@ public class KeyValueAPI {
             CryptoUtils crypto = new CryptoUtils();
 
             //end
-            fin = new FileInputStream(Directory + "/" + key);
-            byte[] readFully = readFully(fin, new File(Directory + "/" + key));
-            byte[] decrypted = crypto.decrypy(Password, readFully);
+            fin = new FileInputStream(Directory + "/" + crypto.encrypt(Password, key));
+            byte[] readFully = readFully(fin, new File(Directory + "/" + crypto.encrypt(Password, key)));
+            byte[] decrypted = crypto.decrypt(Password, readFully);
             ByteArrayInputStream bis = new ByteArrayInputStream(decrypted);
             in = new ObjectInputStream(bis);
             Object readObject = in.readObject();
@@ -119,8 +123,9 @@ public class KeyValueAPI {
         return null;
     }
     public void remove(String key){
+        CryptoUtils crypto = new CryptoUtils();
         cache.remove(key);
-        File fileToDelete=new File(Directory + "/"+key);
+        File fileToDelete=new File(Directory + "/"+crypto.encrypt(Password, key));
         fileToDelete.delete();
     }
     public void SetObject(String key, Object object) throws CryptoException {
@@ -148,7 +153,7 @@ public class KeyValueAPI {
                 try {
                     //encrypt
                       
-                    File encryptedFile = new File(Directory + "/" + key);
+                    File encryptedFile = new File(Directory + "/" + crypto.encrypt(Password, key));
                     FileOutputStream outputStream = new FileOutputStream(encryptedFile);
                     
                     outputStream.write(crypto.encrypt(Password, bos.toByteArray()));
@@ -203,8 +208,20 @@ public class KeyValueAPI {
         return Arrays.asList(dir.list());
     }
     public boolean containKey(String key){
-        File file=new File(Directory + "/"+key);
+        CryptoUtils crypto = new CryptoUtils();
+        File file=new File(Directory + "/"+crypto.encrypt(Password, key));
         return file.exists();
     }
-
+    private byte[] StringToByte(String bytes){
+        
+       String s2=bytes.substring(1, bytes.length()-1);
+        String[] arr=s2.split(", ");
+        byte[] arrbyte = new byte[arr.length];
+        int i=0;
+        for(String ar:arr){
+            arrbyte[i]=(byte) Integer.parseInt(ar);
+            i++;
+        }
+        return arrbyte;
+    }
 }

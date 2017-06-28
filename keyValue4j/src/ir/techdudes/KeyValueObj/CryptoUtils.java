@@ -31,15 +31,15 @@ public class CryptoUtils {
         doCrypto(Cipher.ENCRYPT_MODE, key, inputFile, outputFile);
     }
     public String encrypt(String key,String text){
-        return CryptoByte(Cipher.ENCRYPT_MODE, key, text.getBytes()).toString();
+        return Arrays.toString(CryptoByte(Cipher.ENCRYPT_MODE, key, text.getBytes()));
     }
-    public String decrypy(String key,String text){
-        return CryptoByte(Cipher.DECRYPT_MODE, key, text.getBytes()).toString();
+    public String decrypt(String key,String text){
+        return Arrays.toString(CryptoByte(Cipher.DECRYPT_MODE, key, text.getBytes()));
     }
     public byte[] encrypt(String key,byte [] bytes){
         return CryptoByte(Cipher.ENCRYPT_MODE, key, bytes);
     }
-    public byte[] decrypy(String key,byte [] bytes){
+    public byte[] decrypt(String key,byte [] bytes){
         return CryptoByte(Cipher.DECRYPT_MODE, key, bytes);
     }
     public void decrypt(String key, File inputFile, File outputFile)
