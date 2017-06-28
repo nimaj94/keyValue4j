@@ -92,13 +92,13 @@ public class KeyValueAPI {
         Directory=newdir;
     }
 
-    public KeyValueAPI(String Password, String directory) {
+    public KeyValueAPI(String Password, String repository) {
         if (cache == null) {
             cache = new LinkedHashMap<>();
         }
         this.Password = Password;
         CryptoUtils crypto = new CryptoUtils();
-        Directory = "kv4j/"+crypto.encrypt(Password, directory);
+        Directory = "kv4j/"+crypto.encrypt(Password, repository);
         File theDir = new File("kv4j");
         if (!theDir.exists()) {
             boolean result = false;
@@ -122,7 +122,13 @@ public class KeyValueAPI {
             }
         }
     }
-
+    public void removeRepository(){
+        File folder = new File(Directory );
+        File[] listOfFiles = folder.listFiles();
+        for(File f:listOfFiles)
+            f.delete();
+        folder.delete();
+    }
     /**
      *
      * @param key
