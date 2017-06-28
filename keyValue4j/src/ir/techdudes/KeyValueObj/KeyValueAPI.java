@@ -128,7 +128,7 @@ public class KeyValueAPI {
      * @param key
      * @return
      */
-    public Object GetObject(String key) throws CryptoException {
+    public Object GetObject(String key) {
         try {
             if (cache.containsKey(key)) {
                 return ((Entity) cache.get(key)).getData();
@@ -165,7 +165,7 @@ public class KeyValueAPI {
         File fileToDelete=new File(Directory + "/"+crypto.encrypt(Password, key));
         fileToDelete.delete();
     }
-    public void SetObject(String key, Object object) throws CryptoException {
+    public void SetObject(String key, Object object) {
         CryptoUtils crypto = new CryptoUtils();
         Entity entity = new Entity(key);
         entity.setData(object);
