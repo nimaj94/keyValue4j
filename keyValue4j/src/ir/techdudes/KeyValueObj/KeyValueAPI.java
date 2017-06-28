@@ -40,6 +40,26 @@ public class KeyValueAPI {
         File folder = new File(Directory + "/");
         File[] listOfFiles = folder.listFiles();
         CryptoUtils crypto = new CryptoUtils();
+        String olddir=Directory;
+        String newdir=Directory.split("/")[0]+"/"+Arrays.toString(crypto.encrypt(newpass, crypto.decrypt(oldpass,StringToByte(Directory.split("/")[1]) )));
+        File theDir2 = new File(newdir);
+        if (!theDir2.exists()) {
+            boolean result = false;
+
+            try {
+                theDir2.mkdir();
+                result = true;
+            } catch (SecurityException se) {
+                //handle it
+            }
+        }
+        else{
+            try {
+                throw new Exception("problem with new Directory");
+            } catch (Exception ex) {
+                Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         for (File f : listOfFiles) {
             try {
                 
@@ -47,7 +67,7 @@ public class KeyValueAPI {
                 File oldFile=new File(Directory + "/" + f.getName());
                 fin = new FileInputStream(oldFile);
                 String newName=Arrays.toString(crypto.encrypt(newpass, crypto.decrypt(oldpass,StringToByte(f.getName()) )));
-                File file=new File(Directory + "/"+newName);
+                File file=new File(newdir + "/"+newName);
                 byte[] readFully = readFully(fin, f);
                 byte[] decrypted = crypto.decrypt(oldpass, readFully);
                 fin.close();
@@ -64,21 +84,38 @@ public class KeyValueAPI {
                 Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        
+        
+        File myolddir=new File(olddir);
+        myolddir.delete();
+        Directory=newdir;
     }
 
     public KeyValueAPI(String Password, String directory) {
         if (cache == null) {
             cache = new LinkedHashMap<>();
         }
-        
-        Directory = directory;
         this.Password = Password;
-        File theDir = new File(Directory);
+        CryptoUtils crypto = new CryptoUtils();
+        Directory = "kv4j/"+crypto.encrypt(Password, directory);
+        File theDir = new File("kv4j");
         if (!theDir.exists()) {
             boolean result = false;
 
             try {
                 theDir.mkdir();
+                result = true;
+            } catch (SecurityException se) {
+                //handle it
+            }
+        }
+        File theDir2 = new File(Directory);
+        if (!theDir2.exists()) {
+            boolean result = false;
+
+            try {
+                theDir2.mkdir();
                 result = true;
             } catch (SecurityException se) {
                 //handle it
