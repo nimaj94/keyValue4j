@@ -32,16 +32,25 @@ import java.util.logging.Logger;
  */
 public class KeyValueAPI {
 
-    private HashMap<String, Object> cache;
-    private String Password;
-    private String Directory;
-
-    public void changePassword(String oldpass, String newpass) {
+    private final HashMap<String, Object> cache;
+    private final String Password;
+    private final String Directory;
+    private final String IV;
+    public void changePassword(String oldPass, String newPass) {
+        String oldpass=padding(oldPass);
+        String newpass=padding(newPass);
         File folder = new File(Directory + "/");
         File[] listOfFiles = folder.listFiles();
         CryptoUtils crypto = new CryptoUtils();
         String olddir=Directory;
-        String newdir=Directory.split("/")[0]+"/"+Arrays.toString(crypto.encrypt(newpass, crypto.decrypt(oldpass,StringToByte(Directory.split("/")[1]) )));
+        String[] dirs=Directory.split("/");
+        String mydir="";
+        if(dirs.length>2)
+            for(int ii=0;ii<dirs.length-1;ii++)
+                mydir=mydir+dirs[ii]+"/";
+        else
+            mydir=dirs[0]+"/";
+        String newdir=mydir+Arrays.toString(crypto.encrypt(newpass,IV, crypto.decrypt(oldpass,IV,StringToByte(dirs[dirs.length-1]) )));
         File theDir2 = new File(newdir);
         if (!theDir2.exists()) {
             boolean result = false;
@@ -66,18 +75,18 @@ public class KeyValueAPI {
                 FileInputStream fin = null;
                 File oldFile=new File(Directory + "/" + f.getName());
                 fin = new FileInputStream(oldFile);
-                String newName=Arrays.toString(crypto.encrypt(newpass, crypto.decrypt(oldpass,StringToByte(f.getName()) )));
+                String newName=Arrays.toString(crypto.encrypt(newpass,IV, crypto.decrypt(oldpass,IV,StringToByte(f.getName()) )));
                 File file=new File(newdir + "/"+newName);
                 byte[] readFully = readFully(fin, f);
-                byte[] decrypted = crypto.decrypt(oldpass, readFully);
+                byte[] decrypted = crypto.decrypt(oldpass,IV, readFully);
                 fin.close();
                 FileOutputStream outputStream = new FileOutputStream(file);
-                outputStream.write(crypto.encrypt(newpass, decrypted));
+                outputStream.write(crypto.encrypt(newpass,IV, decrypted));
                 
                 
                 outputStream.close();
                 oldFile.delete();
-                Password = newpass;
+                //Password = newpass;
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -89,17 +98,135 @@ public class KeyValueAPI {
         
         File myolddir=new File(olddir);
         myolddir.delete();
-        Directory=newdir;
-    }
-
-    public KeyValueAPI(String Password, String repository) {
-        if (cache == null) {
-            cache = new LinkedHashMap<>();
+        try {
+            //Directory=newdir;
+            finalize();
+        } catch (Throwable ex) {
+            Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.Password = Password;
+    }
+    public void changePassword(String oldPass, String newPass,String oldIV,String newIV) {
+        String oldpass=padding(oldPass);
+        String newpass=padding(newPass);
+        String oldiv=padding(oldIV);
+        String newiv=padding(newIV);
+        File folder = new File(Directory + "/");
+        File[] listOfFiles = folder.listFiles();
         CryptoUtils crypto = new CryptoUtils();
-        Directory = "kv4j/"+crypto.encrypt(Password, repository);
+        String olddir=Directory;
+        String[] dirs=Directory.split("/");
+        String mydir="";
+        if(dirs.length>2)
+            for(int ii=0;ii<dirs.length-1;ii++)
+                mydir=mydir+dirs[ii]+"/";
+        else
+            mydir=dirs[0]+"/";
+        String newdir=mydir+Arrays.toString(crypto.encrypt(newpass,newiv, crypto.decrypt(oldpass,oldiv,StringToByte(dirs[dirs.length-1]) )));
+        File theDir2 = new File(newdir);
+        if (!theDir2.exists()) {
+            boolean result = false;
+
+            try {
+                theDir2.mkdir();
+                result = true;
+            } catch (SecurityException se) {
+                //handle it
+            }
+        }
+        else{
+            try {
+                throw new Exception("problem with new Directory");
+            } catch (Exception ex) {
+                Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        for (File f : listOfFiles) {
+            try {
+                
+                FileInputStream fin = null;
+                File oldFile=new File(Directory + "/" + f.getName());
+                fin = new FileInputStream(oldFile);
+                String newName=Arrays.toString(crypto.encrypt(newpass,newiv, crypto.decrypt(oldpass,oldiv,StringToByte(f.getName()) )));
+                File file=new File(newdir + "/"+newName);
+                byte[] readFully = readFully(fin, f);
+                byte[] decrypted = crypto.decrypt(oldpass,oldiv, readFully);
+                fin.close();
+                FileOutputStream outputStream = new FileOutputStream(file);
+                outputStream.write(crypto.encrypt(newpass,newiv, decrypted));
+                
+                
+                outputStream.close();
+                oldFile.delete();
+                
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        
+        
+        File myolddir=new File(olddir);
+        myolddir.delete();
+        try {
+            //Directory=newdir;
+            finalize();
+        } catch (Throwable ex) {
+            Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private String padding(String toPad){
+        String result=toPad;
+        
+        for(int i=0;i<result.length()%16;i++)
+            result=result+" ";
+        
+        return result;
+    }
+    public KeyValueAPI(String password, String repository) {
+        
+            cache = new LinkedHashMap<>();
+        
+        this.IV="                ";
+        this.Password = padding(password);
+        CryptoUtils crypto = new CryptoUtils();
+        Directory = "kv4j/"+crypto.encrypt(Password,IV, repository);
         File theDir = new File("kv4j");
+        if (!theDir.exists()) {
+            boolean result = false;
+
+            try {
+                theDir.mkdir();
+                result = true;
+            } catch (SecurityException se) {
+                //handle it
+            }
+        }
+        File theDir2 = new File(Directory);
+        if (!theDir2.exists()) {
+            boolean result = false;
+
+            try {
+                theDir2.mkdir();
+                result = true;
+            } catch (SecurityException se) {
+                //handle it
+            }
+        }
+    }
+    public KeyValueAPI(String password,String secondPassword, String repository, String directory) {
+        
+            cache = new LinkedHashMap<>();
+        
+        this.IV=padding(secondPassword);
+        this.Password = padding(password);
+        CryptoUtils crypto = new CryptoUtils();
+        String mydirectory = directory.replace('\\', '/');
+        if(!mydirectory.substring(directory.length()-1).equals("/") )
+            mydirectory=mydirectory+"/";
+        Directory = mydirectory+"kv4j/"+crypto.encrypt(Password,IV, repository);
+        File theDir = new File(mydirectory+"kv4j");
         if (!theDir.exists()) {
             boolean result = false;
 
@@ -147,9 +274,9 @@ public class KeyValueAPI {
             CryptoUtils crypto = new CryptoUtils();
 
             //end
-            fin = new FileInputStream(Directory + "/" + crypto.encrypt(Password, key));
-            byte[] readFully = readFully(fin, new File(Directory + "/" + crypto.encrypt(Password, key)));
-            byte[] decrypted = crypto.decrypt(Password, readFully);
+            fin = new FileInputStream(Directory + "/" + crypto.encrypt(Password,IV, key));
+            byte[] readFully = readFully(fin, new File(Directory + "/" + crypto.encrypt(Password,IV, key)));
+            byte[] decrypted = crypto.decrypt(Password,IV, readFully);
             ByteArrayInputStream bis = new ByteArrayInputStream(decrypted);
             in = new ObjectInputStream(bis);
             Object readObject = in.readObject();
@@ -168,7 +295,7 @@ public class KeyValueAPI {
     public void remove(String key){
         CryptoUtils crypto = new CryptoUtils();
         cache.remove(key);
-        File fileToDelete=new File(Directory + "/"+crypto.encrypt(Password, key));
+        File fileToDelete=new File(Directory + "/"+crypto.encrypt(Password,IV, key));
         fileToDelete.delete();
     }
     public void SetObject(String key, Object object) {
@@ -196,10 +323,10 @@ public class KeyValueAPI {
                 try {
                     //encrypt
                       
-                    File encryptedFile = new File(Directory + "/" + crypto.encrypt(Password, key));
+                    File encryptedFile = new File(Directory + "/" + crypto.encrypt(Password,IV, key));
                     FileOutputStream outputStream = new FileOutputStream(encryptedFile);
                     
-                    outputStream.write(crypto.encrypt(Password, bos.toByteArray()));
+                    outputStream.write(crypto.encrypt(Password,IV, bos.toByteArray()));
                     
                     //end
                     bos.close();
@@ -222,9 +349,7 @@ public class KeyValueAPI {
     }
 
     private void caching(String key, Entity entity) {
-        if (cache == null) {
-            cache = new LinkedHashMap<>();
-        }
+        
         if (cache.size() < 4000) {
             cache.put(key, entity);
         } else {
@@ -252,7 +377,7 @@ public class KeyValueAPI {
     }
     public boolean containKey(String key){
         CryptoUtils crypto = new CryptoUtils();
-        File file=new File(Directory + "/"+crypto.encrypt(Password, key));
+        File file=new File(Directory + "/"+crypto.encrypt(Password,IV, key));
         return file.exists();
     }
     private byte[] StringToByte(String bytes){
