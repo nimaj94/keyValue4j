@@ -5,7 +5,7 @@
  */
 package testkeyvalue4j;
 
-import ir.techdudes.KeyValueObj.Value;
+import com.keyvalue4j.Value;
 
 /**
  *

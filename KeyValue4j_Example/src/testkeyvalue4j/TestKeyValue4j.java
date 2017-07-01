@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package testkeyvalue4j;
-import ir.techdudes.KeyValueObj.KeyValueAPI;
+import com.keyvalue4j.KeyValueAPI;
 /**
  *
  * @author nima
