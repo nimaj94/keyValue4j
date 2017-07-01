@@ -1,4 +1,4 @@
-package ir.techdudes.KeyValueObj;
+package com.keyvalue4j;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

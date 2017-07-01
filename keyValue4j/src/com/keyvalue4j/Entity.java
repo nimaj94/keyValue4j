@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package ir.techdudes.KeyValueObj;
+package com.keyvalue4j;
 import java.io.Serializable;
 
 /**
