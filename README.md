@@ -11,7 +11,7 @@ A key-value pair (KVP) is a set of two linked data items: a key, which is a uniq
 keyvalue4j is a small but powerful java filing package to store and retrieve any default Data Types, serializable objects and arrays as they are. this package helps java beginners to save their data easily. 
 
 ## Why using keyvalue4j?
-because anybody can create their own classes for holding data and exactly store or retrieve it without any kind of mapping.
+because anybody can create their own classes for holding data and exactly store or retrieve them without any kind of mapping.
 
 ##### warning
 for enterprise use and storing critical data it is highly recommended to review the code first.
