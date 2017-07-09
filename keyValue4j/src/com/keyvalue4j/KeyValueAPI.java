@@ -98,12 +98,7 @@ public class KeyValueAPI {
         
         File myolddir=new File(olddir);
         myolddir.delete();
-        try {
-            //Directory=newdir;
-            finalize();
-        } catch (Throwable ex) {
-            Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
     public void changePassword(String oldPass, String newPass,String oldIV,String newIV) {
         String oldpass=padding(oldPass);
@@ -169,12 +164,7 @@ public class KeyValueAPI {
         
         File myolddir=new File(olddir);
         myolddir.delete();
-        try {
-            //Directory=newdir;
-            finalize();
-        } catch (Throwable ex) {
-            Logger.getLogger(KeyValueAPI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
     private String padding(String toPad){
         String result=toPad;
