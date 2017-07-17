@@ -245,6 +245,7 @@ public class KeyValueAPI {
         for(File f:listOfFiles)
             f.delete();
         folder.delete();
+        cache.clear();
     }
     /**
      *
@@ -343,8 +344,8 @@ public class KeyValueAPI {
         if (cache.size() < 4000) {
             cache.put(key, entity);
         } else {
-            for (int i = 0; i < 30; i++) {
-                Iterator<Map.Entry<String, Object>> iterator = cache.entrySet().iterator();
+            Iterator<Map.Entry<String, Object>> iterator = cache.entrySet().iterator();
+            for (int i = 0; i < 30; i++){
                 iterator.next();
                 iterator.remove();
             }

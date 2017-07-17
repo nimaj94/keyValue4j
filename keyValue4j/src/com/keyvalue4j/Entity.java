@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author nima
  */
-public class Entity implements Serializable{
+class Entity implements Serializable{
     private String ID;
     private Object data;
     private String key;

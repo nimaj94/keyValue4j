@@ -24,7 +24,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 
-public class CryptoUtils {
+class CryptoUtils {
     private final String ALGORITHM = "AES";
     private final String TRANSFORMATION = "AES/CBC/PKCS5PADDING";
     
