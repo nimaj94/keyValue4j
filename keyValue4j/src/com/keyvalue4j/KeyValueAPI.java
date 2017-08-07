@@ -363,7 +363,15 @@ public class KeyValueAPI {
         return null;
     }
     public List<String> getAllKeys(){
+        CryptoUtils crypto = new CryptoUtils();
         File dir=new File(Directory);
+        String[] mylist = new String[dir.list().length];
+        String[] temp=dir.list();
+        int i=0;
+        for(String str : temp){
+            mylist[i]=new String(crypto.decrypt(Password,IV,StringToByte(str)));
+            i++;
+        }
         return Arrays.asList(dir.list());
     }
     public boolean containKey(String key){
