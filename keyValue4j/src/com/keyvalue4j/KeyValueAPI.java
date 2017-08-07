@@ -372,7 +372,7 @@ public class KeyValueAPI {
             mylist[i]=new String(crypto.decrypt(Password,IV,StringToByte(str)));
             i++;
         }
-        return Arrays.asList(dir.list());
+        return Arrays.asList(mylist);
     }
     public boolean containKey(String key){
         CryptoUtils crypto = new CryptoUtils();
