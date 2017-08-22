@@ -15,6 +15,7 @@ class Entity implements Serializable{
     private String ID;
     private Object data;
     private String key;
+    int c;
     public Entity(String key){
         ID=java.util.UUID.randomUUID().toString();
         this.key=key;
