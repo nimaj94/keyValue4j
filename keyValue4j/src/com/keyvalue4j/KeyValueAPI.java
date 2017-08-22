@@ -31,7 +31,7 @@ import java.util.logging.Logger;
  * @author nima
  */
 public class KeyValueAPI {
-
+    int testb;
     private final HashMap<String, Object> cache;
     private final String Password;
     private final String Directory;
