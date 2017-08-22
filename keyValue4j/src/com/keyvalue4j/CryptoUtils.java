@@ -27,7 +27,6 @@ import javax.crypto.spec.SecretKeySpec;
 class CryptoUtils {
     private final String ALGORITHM = "AES";
     private final String TRANSFORMATION = "AES/CBC/PKCS5PADDING";
-    int test;
     
     public String encrypt(String key,String IV,String text){
         return Arrays.toString(CryptoByte(Cipher.ENCRYPT_MODE, key, text.getBytes(),IV));
