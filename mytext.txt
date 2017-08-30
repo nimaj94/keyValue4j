@@ -1,0 +1,317 @@
+* commit ff407b01387117e37f78111b7835eea06d5c0e3a
+| Author: nimaj <nimaj@DESKTOP-53JB2TT>
+| Date:   Tue Aug 22 12:02:39 2017 +0430
+| 
+|     Initial commit
+| 
+* commit 4b1e576ad5c4a9bbf3f3d84224590fb6bb9eb499
+| Author: nimaj <nimaj@DESKTOP-53JB2TT>
+| Date:   Tue Aug 22 11:20:58 2017 +0430
+| 
+|     test git features
+|   
+*   commit 2a48a5792a90d8b4bb6df16a1a24a3be88956345
+|\  Merge: 9845e0e ff166cf
+| | Author: nimaj94 <nimaj1373@yahoo.com>
+| | Date:   Tue Aug 22 11:01:45 2017 +0430
+| | 
+| |     Merge pull request #1 from nimaj94/nima
+| |     
+| |     Nima
+| | 
+| * commit ff166cf0e7b7dc80ae2b1511e7430e02ddef22bc
+| | Author: nimaj94 <nimaj1373@yahoo.com>
+| | Date:   Tue Aug 22 10:54:56 2017 +0430
+| | 
+| |     Update KeyValueAPI.java
+| | 
+| * commit d74b5fda5e5098c897281987ba1f11453c7ae4f9
+| | Author: nimaj <nimaj@DESKTOP-53JB2TT>
+| | Date:   Tue Aug 22 10:52:08 2017 +0430
+| | 
+| |     test git features
+| | 
+* | commit 9845e0e75d11aba86aaecffc3a02d37a515e70b4
+|/  Author: nimaj94 <nimaj1373@yahoo.com>
+|   Date:   Tue Aug 22 10:56:59 2017 +0430
+|   
+|       Update Entity.java
+| 
+* commit a1073b75f6d993423156b0da5ca4bac4a60f74d5
+| Author: nimaj <nimaj@DESKTOP-53JB2TT>
+| Date:   Mon Aug 7 19:52:42 2017 +0430
+| 
+|     fixing getAllKeys problem
+| 
+* commit d60b1bfb1f2560ec6f8e7f2c0147dd7c71af3363
+| Author: nimaj <nimaj@DESKTOP-53JB2TT>
+| Date:   Mon Aug 7 19:49:07 2017 +0430
+| 
+|     fixing getAllKeys problem
+| 
+* commit e46279449bc372ac60afd1faf2a35a36ff4b2b92
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Mon Jul 17 23:55:43 2017 +0430
+| 
+|     fix removeRepository cache problem
+| 
+* commit 339ad14cbc412d889322148be24237bc25e76545
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Mon Jul 17 23:55:05 2017 +0430
+| 
+|     fix removeRepository cache problem
+|   
+*   commit 4b304fbbf288917d45d860c4e2e3c295e450f767
+|\  Merge: 97b987d 4d8e2c1
+| | Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| | Date:   Sun Jul 9 17:52:30 2017 +0430
+| | 
+| |     Merge origin/master
+| | 
+| * commit 4d8e2c132e1f39a2474183f2fed1177ead3e79a0
+| | Author: nimaj94 <nimaj1373@yahoo.com>
+| | Date:   Sat Jul 8 23:01:32 2017 +0430
+| | 
+| |     Update README.md
+| | 
+* | commit 97b987d2450bf2897afe8e87ba176263676fe678
+|/  Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+|   Date:   Sun Jul 9 17:51:56 2017 +0430
+|   
+|       removing useless codes
+| 
+* commit af2c1156fb9ec5d01193e93743b28584d0dc424a
+| Author: nimaj94 <nimaj1373@yahoo.com>
+| Date:   Fri Jul 7 02:47:05 2017 +0430
+| 
+|     Update README.md
+| 
+* commit 4ce54d98d285be31ccdc643bff716544f318b996
+| Author: nimaj94 <nimaj1373@yahoo.com>
+| Date:   Fri Jul 7 02:46:37 2017 +0430
+| 
+|     Update README.md
+| 
+* commit ddd8ce5769c9170eab64fa034d1d6c71195a17f9
+| Author: nimaj94 <nimaj1373@yahoo.com>
+| Date:   Fri Jul 7 02:46:23 2017 +0430
+| 
+|     Update README.md
+| 
+* commit acf3815ef3082ceff1718c72b542931bc93c6cbc
+| Author: nimaj94 <nimaj1373@yahoo.com>
+| Date:   Fri Jul 7 02:23:21 2017 +0430
+| 
+|     Update README.md
+| 
+* commit 52c2d3b5b51486ea8127544c0d2f3c58212331b4
+| Author: nimaj94 <nimaj1373@yahoo.com>
+| Date:   Fri Jul 7 02:21:57 2017 +0430
+| 
+|     Update README.md
+| 
+* commit 6dd51238264660f4ba697191c38eb7633bfbfb40
+| Author: nimaj94 <nimaj1373@yahoo.com>
+| Date:   Fri Jul 7 02:21:01 2017 +0430
+| 
+|     Update README.md
+| 
+* commit bdd60706ca21a0f8cffb302d49560bd2eeda4471
+| Author: nimaj94 <nimaj1373@yahoo.com>
+| Date:   Fri Jul 7 01:54:28 2017 +0430
+| 
+|     Update README.md
+| 
+* commit d214677e6e2c8d620349fcac0dc249adb8edbdb3
+| Author: nimaj94 <nimaj1373@yahoo.com>
+| Date:   Fri Jul 7 01:48:21 2017 +0430
+| 
+|     Update README.md
+| 
+* commit 2c74e28f673071b0d7f0da36fcf80b14ad9c6f0c
+| Author: nimaj94 <nimaj1373@yahoo.com>
+| Date:   Fri Jul 7 01:47:32 2017 +0430
+| 
+|     Update README.md
+|   
+*   commit fa8277934725b5e6836f31aea72888168e309b1b
+|\  Merge: c60fae3 d44275d
+| | Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| | Date:   Sat Jul 1 13:45:45 2017 +0430
+| | 
+| |     Merge origin/master
+| | 
+| * commit d44275da12ab7fafb4c4fac7836018bd98f534f5
+| | Author: nimaj94 <nimaj1373@yahoo.com>
+| | Date:   Sat Jul 1 01:38:59 2017 +0430
+| | 
+| |     Update README.md
+| | 
+| * commit cecca07f3f66c12d797ed9be959def8afbca0ab8
+| | Author: nimaj94 <nimaj1373@yahoo.com>
+| | Date:   Sat Jul 1 01:36:30 2017 +0430
+| | 
+| |     Update README.md
+| | 
+| * commit 382b89a6823439939dbd6edff812a4aae9518fa5
+| | Author: nimaj94 <nimaj1373@yahoo.com>
+| | Date:   Sat Jul 1 01:36:04 2017 +0430
+| | 
+| |     Update README.md
+| | 
+| * commit 7625587bf07fe1ce74b219ec9185cbd623ced49a
+| | Author: nimaj94 <nimaj1373@yahoo.com>
+| | Date:   Sat Jul 1 01:35:32 2017 +0430
+| | 
+| |     Create README.md
+| | 
+* | commit c60fae30c92e29600f823f150fe6be3a7a2cf7d4
+| | Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| | Date:   Sat Jul 1 13:43:52 2017 +0430
+| | 
+| |     package name changed to com.keyvalue4j
+| | 
+* | commit f54554ca1dadfd8814a457b45e6c513094b99bcf
+|/  Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+|   Date:   Sat Jul 1 13:43:40 2017 +0430
+|   
+|       package name changed to com.keyvalue4j
+| 
+* commit df5ed8d884a377375c1735a6605198295501fa29
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Fri Jun 30 02:08:59 2017 +0430
+| 
+|     more security method added
+| 
+* commit 264e7f4f38e75a1cbbb67bc79497f7956a65c934
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Thu Jun 29 00:13:45 2017 +0430
+| 
+|     removeRepository method added
+| 
+* commit 96b652fa162edc0e8bb4cdfca038bbe24e874c7e
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Wed Jun 28 22:35:58 2017 +0430
+| 
+|     Example Added
+| 
+* commit 52e93460fd78d99773d2567063c106665623063f
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Wed Jun 28 22:34:50 2017 +0430
+| 
+|     Example Added
+| 
+* commit 3dfb91d7d14edc517c03f6c8a0eeedb3dc026991
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Wed Jun 28 22:33:20 2017 +0430
+| 
+|     fix Exception problem
+| 
+* commit a0ca302265883d750eb7885787cf3a53bb473f2f
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Wed Jun 28 12:07:54 2017 +0430
+| 
+|     Increase Security Level
+| 
+* commit 802cba30eaa842510a99bbe061c5061675064434
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Wed Jun 28 11:11:29 2017 +0430
+| 
+|     Increase Security Level
+| 
+* commit 70fddba23ea31a1cb282a809876e309feecdd624
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Wed Jun 28 00:38:13 2017 +0430
+| 
+|     Remove, getKeys and containKey added to the project
+|   
+*   commit e9491379eb3da7823ba6c576f4e7463ee997bfb7
+|\  Merge: b4770eb 5ee667c
+| | Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| | Date:   Tue Jun 27 21:40:31 2017 +0430
+| | 
+| |     Merge origin/master
+| | 
+| * commit 5ee667c5e11fb5f0c72ac952a7819e6820142257
+| | Author: nimaj94 <nimaj1373@yahoo.com>
+| | Date:   Tue Jun 27 02:43:14 2017 +0430
+| | 
+| |     Update Test_api.java
+| | 
+* | commit b4770eb4ecbd5f25347239ab0cb31938d305ecde
+| | Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| | Date:   Tue Jun 27 21:38:19 2017 +0430
+| | 
+| |     increase Security level
+| | 
+* | commit 0e915186cba027d64ea2ca775e0af5c257ff9edd
+|/  Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+|   Date:   Tue Jun 27 15:34:17 2017 +0430
+|   
+|       increase Security level
+| 
+* commit 3841b811c4cbc90ad9b7bc1970e22aaafbf44ecf
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Tue Jun 27 02:41:30 2017 +0430
+| 
+|     Add repository name
+| 
+* commit 69a9bafac6e1ba1667795267ebfa7beaed833dd9
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Tue Jun 27 02:20:15 2017 +0430
+| 
+|     fix problem with changePassword
+| 
+* commit 222e1378bf00a6b52d16cc58888f135417053cc2
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Mon Jun 26 12:00:59 2017 +0430
+| 
+|     set ID for objects
+| 
+* commit b6f2f7b57731826ab823517be4c1069a1db46ccc
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Mon Jun 26 01:52:56 2017 +0430
+| 
+|     sending examples
+| 
+* commit 3149fbc05fb4fca77a0c83e74f228caece4afb7b
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Mon Jun 26 01:52:22 2017 +0430
+| 
+|     sending examples
+| 
+* commit 4208086d260085c9d86bfa1e45b6444361409cd9
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Mon Jun 26 01:12:15 2017 +0430
+| 
+|     sending examples
+| 
+* commit acb3b9ded207c95f83b20d0478ed8229bd59117d
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Mon Jun 26 01:09:53 2017 +0430
+| 
+|     sending examples
+| 
+* commit ef0e0c52a8e15ac705110a3fece12ecdc2dbdec7
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Mon Jun 26 01:07:55 2017 +0430
+| 
+|     testing github connection
+| 
+* commit 465e03889278c370645e1ddac5e52f00d7fbe518
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Mon Jun 26 00:58:31 2017 +0430
+| 
+|     testing github connection
+| 
+* commit bb15537d5a75b0de54223340407384e7b1dae378
+| Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+| Date:   Mon Jun 26 00:39:02 2017 +0430
+| 
+|     testing github connection
+| 
+* commit e42d89ea4e1befb0afcc8ac9cd339d514cb0ccc4
+  Author: nima <nima@nima-GE60-0NC-GE60-0ND>
+  Date:   Mon Jun 26 00:34:07 2017 +0430
+  
+      sending codes to repository
