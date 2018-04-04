@@ -1,5 +1,5 @@
 # keyValue4j 
-small key-value database / fileSystem to store java objects
+small key-value database to store java objects
 #### [tutorial](https://github.com/nimaj94/keyValue4j/wiki/Tutorial-Page)
 #### Simple for java beginners
 #### Powerful for experts
